@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroBot Smart Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <img src="Agrobot logo.jpeg" alt="AgroBot Logo" class="sidebar-logo-img">
+        <span>AgroBot</span>
+        </div>
+        <ul>
+            <li class="active"><span>📊</span> Dashboard</li>
+            <li><span>👤</span> Login</li>
+        </ul>
+        <div class="user-box">
+            <p><strong>Kumar Ashish</strong></p>
+            <p>Sensor ID: AGRO-102</p>
+            <div class="online-status">
+                <span class="green-dot"></span> System Online
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" onclick="toggleSidebar()"></div>
+
+    <div class="main">
+        
+        <div class="topbar">
+            <div class="topbar-left">
+                <div class="menu-btn" onclick="toggleSidebar()">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+            
+            <h2>Dashboard Overview</h2>
+            
+            <div class="help-container">
+                <div class="help-btn" onclick="toggleHelpBox()" data-tooltip="Help & Support">?</div>
+                
+                <div class="help-box" id="helpBox">
+                    <p><strong>Help & Support Details</strong></p>
+                    <p>📞 +91 0000000000</p>
+                    <p>✉ support@agrobot.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cards-container">
+            
+            <div class="card moisture-card">
+                <div class="card-header">
+                    <h3>Soil Moisture</h3>
+                    <span class="card-icon">💧</span>
+                </div>
+                <h1 id="moisture">64%</h1>
+                <p>Status: Healthy</p>
+            </div>
+
+            <div class="card weather-card">
+                <div class="card-header">
+                    <h3>Temperature</h3>
+                    <span id="temp-icon" class="card-icon">🌡️</span>
+                </div>
+                <h1 id="temp">--°C</h1>
+                <p id="temp-status">Fetching location...</p>
+            </div>
+
+            <div class="card weather-card">
+                <div class="card-header">
+                    <h3>Humidity</h3>
+                    <span class="card-icon">🌧️</span>
+                </div>
+                <h1 id="humidity">--%</h1>
+                <p id="hum-status">Fetching...</p>
+            </div>
+
+            <div class="card weather-card">
+                <div class="card-header">
+                    <h3>Wind Speed</h3>
+                    <span class="card-icon">🌬️</span>
+                </div>
+                <h1 id="wind">-- km/h</h1>
+                <p id="wind-status">Fetching...</p>
+            </div>
+
+        </div>
+
+        <div class="graph-section">
+            <div class="graph-header">
+                <h3>Soil Moisture Trend</h3>
+                <span class="graph-period">Past 7 Days</span>
+            </div>
+            <div class="graph-placeholder">
+                Charts.js Data (Connect to Firebase next)
+            </div>
+        </div>
+
+        <div class="action-footer">
+            <button class="btn download-report">📥 Download Full Report</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

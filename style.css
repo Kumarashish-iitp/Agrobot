@@ -1,0 +1,394 @@
+
+:root {
+    --primary-green: #16a34a; 
+    --primary-dark: #1e293b; 
+    --bg-light: linear-gradient(to right, #4c544e, #094909); 
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); 
+    --transition-smooth: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif; /* Modern, readable font */
+}
+
+body {
+    display: flex;
+    background: var(--bg-light);
+    color: #333;
+    overflow-x: hidden;
+}
+
+/* --- SIDEBAR: Design Simplified --- */
+.sidebar-logo-img {
+    height: 40px; 
+    width: auto;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.sidebar .logo {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    gap: 12px;
+    color: #fff;
+}
+
+.sidebar {
+    width: 260px;
+    background: var(--primary-dark);
+    color: white;
+    min-height: 100vh;
+    padding: 30px 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: var(--transition-smooth);
+    z-index: 1000;
+}
+
+.sidebar .logo span {
+    font-size: 28px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    cursor:pointer;
+    transition: var(--transition-smooth);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 15px;
+}
+
+.sidebar ul li span {
+    font-size: 18px;
+    opacity: 0.8;
+}
+
+.sidebar ul li:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar ul .active {
+    background: var(--primary-green);
+    font-weight: 600;
+}
+
+/* USER BOX: Redesigned smaller at bottom */
+.user-box {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 13px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.online-status {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #a7f3d0; /* Soft Green */
+}
+
+.green-dot {
+    width: 10px;
+    height: 10px;
+    background: #00ff88;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.7);
+}
+
+/* --- MAIN CONTENT AREA: Spacing Adjusted --- */
+.main {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    padding: 30px;
+    transition: var(--transition-smooth);
+}
+
+/* --- TOPBAR: Integrated Logo --- */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 30px;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.topbar h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #dcd8d8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* MENU BUTTON (Mobile) */
+.menu-btn {
+    width: 30px;
+    height: 22px;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.menu-btn span {
+    height: 3px;
+    background: #555;
+    border-radius: 2px;
+}
+
+/* --- HELP TOOLTIP & DETAIL BOX --- */
+.help-container {
+    position: relative;
+}
+
+/* Aesthetic Question Mark Button */
+.help-btn {
+    background: var(--primary-green);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 10px rgba(22, 163, 74, 0.3);
+}
+
+.help-btn:hover {
+    transform: scale(1.05);
+}
+
+/* **New: Smart Tooltip on Hover** */
+.help-btn::after {
+    content: attr(data-tooltip); /* Get value from HTML */
+    position: absolute;
+    top: 50%;
+    right: 55px; /* Tooltip on the left of the button */
+    transform: translateY(-50%);
+    background: #333;
+    color: white;
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-smooth);
+}
+
+.help-btn:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Help Box (Shows on Click) */
+.help-box {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    background: white;
+    width: 250px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: none;
+    z-index: 100;
+    border: 1px solid #eee;
+}
+
+.help-box p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* --- CARDS CONTAINER: Design Modernized --- */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
+    border: 1px solid rgba(0,0,0,0.01);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #777;
+}
+
+.card-icon {
+    font-size: 20px;
+    background: rgba(22, 163, 74, 0.1);
+    color: var(--primary-green);
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.card h1 {
+    margin-top: 15px;
+    font-size: 36px;
+    color: #111;
+    font-weight: 600;
+}
+
+.moisture-card h1 {
+    color: var(--primary-green);
+}
+
+.card p {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #888;
+}
+
+/* --- GRAPH SECTION: Polished --- */
+.graph-section {
+    margin-top: 40px;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+}
+
+.graph-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.graph-period {
+    background: rgba(0,0,0,0.05);
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: #666;
+}
+
+.graph-placeholder {
+    height: 300px;
+    background: #eef1f6;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #aaa;
+    font-size: 14px;
+    font-style: italic;
+    border: 2px dashed #ddd;
+}
+
+/* --- DOWNLOAD SECTION: Modern Button --- */
+.action-footer {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.btn {
+    width: auto;
+    min-width: 200px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.download-report {
+    background: var(--primary-green);
+    color: white;
+    box-shadow: 0 4px 10px rgba(22, 163, 74, 0.3);
+}
+
+.download-report:hover {
+    background: #15803d;
+    transform: scale(1.02);
+}
+
+/* --- OVERLAY (Mobile) --- */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-smooth);
+    z-index: 999;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media(max-width: 900px) {
+    .main { margin-left: 0; width: 100%; padding: 20px; }
+    .sidebar { left: -260px; }
+    .sidebar.active { left: 0; }
+    .menu-btn { display: flex; }
+    .topbar h2 { display: none; } /* Hide title on small screens */
+    .topbar .help-btn::after { display: none !important; } /* Hide tooltip */
+}
