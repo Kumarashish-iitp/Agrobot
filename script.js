@@ -1,5 +1,5 @@
 
-// const BACKEND_URL = "https://YOUR-RENDER-URL.onrender.com";
+const BACKEND_URL = "https://agrobot-backend-rnu5.onrender.com";
 
 function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
