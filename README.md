@@ -79,16 +79,6 @@ open index.html
 
 ---
 
-## 👥 Team — Group [Group No]
-
-| Member | Role |
-|---|---|
-| Kumar Ashish | Frontend Development (Dashboard + Weather API) |
-| [Member 2] | Backend Development (Node.js, Express, MongoDB) |
-| [Member 3] | Hardware & Sensor Setup (ESP8266) |
-| [Member 4] | [Role] |
-| [Member 5] | [Role] |
-
 ---
 
 ## 📄 License
