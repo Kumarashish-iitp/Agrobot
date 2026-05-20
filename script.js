@@ -182,7 +182,19 @@ function updateWeatherUI(data) {
     document.getElementById("temp").innerText = Math.round(data.main.temp) + "°C";
     document.getElementById("humidity").innerText = data.main.humidity + "%";
     document.getElementById("wind").innerText = (data.wind.speed * 3.6).toFixed(1) + " km/h";
-    document.getElementById("temp-status").innerText = `Feels like: ${Math.round(data.main.feels_like)}°C`;
+    const tempCelsius = Math.round(data.main.temp);
+const tempStatusEl = document.getElementById("temp-status");
+
+if (tempCelsius < 22) {
+    tempStatusEl.innerText = "❄️ Status: Cool";
+    tempStatusEl.style.color = "#3b82f6"; 
+} else if (tempCelsius >= 22 && tempCelsius <= 32) {
+    tempStatusEl.innerText = "☀️ Status: Normal";
+    tempStatusEl.style.color = "#16a34a";
+} else {
+    tempStatusEl.innerText = "🔥 Status: Hot";
+    tempStatusEl.style.color = "#ef4444"; 
+}
     document.getElementById("hum-status").innerText = "Normal";
     document.getElementById("wind-status").innerText = data.weather[0].main;
     const weatherMain = data.weather[0].main.toLowerCase();
