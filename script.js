@@ -184,7 +184,6 @@ function updateWeatherUI(data) {
     document.getElementById("wind").innerText = (data.wind.speed * 3.6).toFixed(1) + " km/h";
     const tempCelsius = Math.round(data.main.temp);
 const tempStatusEl = document.getElementById("temp-status");
-
 if (tempCelsius < 22) {
     tempStatusEl.innerText = "❄️ Status: Cool";
     tempStatusEl.style.color = "#3b82f6"; 
