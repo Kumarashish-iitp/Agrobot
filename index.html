@@ -14,18 +14,19 @@
     <div class="sidebar" id="sidebar">
         <div class="logo">
             <img src="Agrobot logo.jpeg" alt="AgroBot Logo" class="sidebar-logo-img">
-        <span>AgroBot</span>
+            <span>AgroBot</span>
         </div>
         <ul>
-            <li class="active"><span>📊</span> Dashboard</li>
-            <li><span>👤</span> Login</li>
+            <li class="active" onclick="window.location.href='index.html'"><span>📊</span> Dashboard</li>
+            <li onclick="window.location.href='login.html'"><span>👤</span> Login</li>
         </ul>
         <div class="user-box">
-            <p><strong>Kumar Ashish</strong></p>
-            <p>Sensor ID: AGRO-102</p>
+            <p><strong id="display-user">Guest User</strong></p>
+            <p id="display-sensor">Sensor ID: Not Logged In</p>
             <div class="online-status">
                 <span class="green-dot"></span> System Online
             </div>
+            <button id="logout-btn" style="display:none; margin-top:8px; background:none; border:none; color:#ef4444; cursor:pointer; font-size:12px; font-family:inherit; padding:0;">Logout</button>
         </div>
     </div>
 
@@ -47,8 +48,8 @@
                 
                 <div class="help-box" id="helpBox">
                     <p><strong>Help & Support Details</strong></p>
-                    <p>📞 +91 0000000000</p>
-                    <p>✉ support@agrobot.com</p>
+                    <p>📞 +91 9625343553</p>
+                    <p>✉ kumarashish848209@gmail.com</p>
                 </div>
             </div>
         </div>
