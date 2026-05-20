@@ -1,0 +1,118 @@
+:root {
+    --primary-green: #16a34a; 
+    --primary-dark: #1e293b; 
+    --bg-light: linear-gradient(to right, #4c544e, #094909); 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: var(--bg-light);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-container {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-logo {
+    height: 60px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.login-container h2 {
+    margin-bottom: 25px;
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 8px rgba(22, 163, 74, 0.2);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary-green);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(22, 163, 74, 0.3);
+}
+
+.login-btn:hover {
+    background: #15803d;
+    transform: scale(1.02);
+}
+
+.toggle-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.toggle-text a {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.toggle-text a:hover {
+    text-decoration: underline;
+}
+
+.back-home {
+    margin-top: 15px;
+    display: inline-block;
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back-home:hover {
+    color: var(--primary-green);
+}

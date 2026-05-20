@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroBot - Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <img src="Agrobot logo.jpeg" alt="AgroBot Logo" class="login-logo">
+        
+        <div id="login-section">
+            <h2>Login to AgroBot</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">Full Name</label>
+                    <input type="text" id="username" placeholder="Enter your name" required>
+                </div>
+                <div class="input-group">
+                    <label for="sensorId">Sensor ID</label>
+                    <input type="text" id="sensorId" placeholder="e.g. AGRO-102" required>
+                </div>
+                <button type="submit" class="login-btn">Log In</button>
+            </form>
+            <p class="toggle-text">Don't have an account? <a href="#" onclick="toggleForm('signup')">Create New Account</a></p>
+        </div>
+
+        <div id="signup-section" style="display: none;">
+            <h2>Create AgroBot Account</h2>
+            <form id="signupForm">
+                <div class="input-group">
+                    <label for="signup-username">Full Name</label>
+                    <input type="text" id="signup-username" placeholder="Enter your full name" required>
+                </div>
+                <div class="input-group">
+                    <label for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" placeholder="Enter your email" required>
+                </div>
+                <div class="input-group">
+                    <label for="new-sensorId">Assign Sensor ID</label>
+                    <input type="text" id="new-sensorId" placeholder="e.g. AGRO-102" required>
+                </div>
+                <button type="submit" class="login-btn">Sign Up</button>
+            </form>
+            <p class="toggle-text">Already have an account? <a href="#" onclick="toggleForm('login')">Login Here</a></p>
+        </div>
+        
+        <br>
+        <a href="index.html" class="back-home">← Back to Dashboard</a>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
