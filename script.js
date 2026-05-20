@@ -1,6 +1,7 @@
-
 const BACKEND_URL = "https://agrobot-backend-rnu5.onrender.com";
+ 
 
+ 
 function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
     const overlay = document.querySelector(".overlay");
@@ -17,25 +18,63 @@ function toggleSidebar() {
         }
     }
 }
-
+ 
 function toggleHelpBox() {
     const box = document.getElementById("helpBox");
     box.style.display = (box.style.display === "block") ? "none" : "block";
 }
-
+ 
 window.addEventListener('click', function (e) {
     if (!document.getElementById('helpBox').contains(e.target) &&
         !document.querySelector('.help-btn').contains(e.target)) {
         document.getElementById('helpBox').style.display = 'none';
     }
 });
+ 
 
+ 
+async function wakeUpBackend() {
+    console.log("⏳ Waking up backend...");
+    try {
+        await fetch(`${BACKEND_URL}/api/moisture`);
+        console.log("✅ Backend is awake!");
+    } catch (_) {
+        console.warn("⚠️ Wake-up ping failed. Backend may still be starting...");
+    }
+}
+ 
 
+ 
+async function checkBackendStatus() {
+    const statusEl = document.querySelector(".online-status");
+    if (!statusEl) return;
+ 
+    try {
+        const res = await fetch(`${BACKEND_URL}/api/moisture`);
+        if (res.ok) {
+            statusEl.innerHTML = `
+                <span class="green-dot"></span> System Online
+            `;
+            const dot = statusEl.querySelector(".green-dot");
+            dot.style.background = "#00ff88";
+            dot.style.boxShadow = "0 0 10px rgba(0, 255, 136, 0.7)";
+        } else {
+            throw new Error("Non-OK response");
+        }
+    } catch {
+        statusEl.innerHTML = `
+            <span class="green-dot" style="background:#ef4444; box-shadow:0 0 10px rgba(239,68,68,0.7);"></span> Backend Offline
+        `;
+    }
+}
+ 
+
+ 
 async function fetchLatestMoisture() {
     try {
-        const res = await fetch(`${BACKEND_URL}/api/moisture/latest`);
+        const res = await fetch(`${BACKEND_URL}/api/moisture`);
         const json = await res.json();
-        const moistureValue = json.data.moisturePercentage;
+        const moistureValue = json.data[0].moisturePercentage;
         document.getElementById("moisture").innerText = moistureValue + "%";
         const statusEl = document.querySelector(".moisture-card p");
         if (moistureValue < 30) {
@@ -54,17 +93,17 @@ async function fetchLatestMoisture() {
         document.querySelector(".moisture-card p").innerText = "⚠️ Backend not connected";
     }
 }
-
+ 
 
 let moistureChart = null;
-
+ 
 async function fetchWeeklyData() {
     const graphPlaceholder = document.querySelector(".graph-placeholder");
     graphPlaceholder.innerHTML = `<canvas id="moistureChart"></canvas>`;
     graphPlaceholder.style.background = "white";
     graphPlaceholder.style.border = "none";
     graphPlaceholder.style.height = "300px";
-
+ 
     try {
         const res = await fetch(`${BACKEND_URL}/api/moisture/weekly`);
         const json = await res.json();
@@ -73,10 +112,10 @@ async function fetchWeeklyData() {
         drawChart(labels, values);
     } catch (err) {
         console.error("Weekly fetch error:", err);
-        drawChart(["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],[55,62,58,70,65,72,68],true);
+        drawChart(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], [55, 62, 58, 70, 65, 72, 68], true);
     }
 }
-
+ 
 function drawChart(labels, values, isDemo = false) {
     const ctx = document.getElementById("moistureChart").getContext("2d");
     if (moistureChart) moistureChart.destroy();
@@ -85,7 +124,7 @@ function drawChart(labels, values, isDemo = false) {
         data: {
             labels: labels,
             datasets: [{
-                label: isDemo ? "Moisture % (Demo — Backend connect karo)" : "Avg Moisture %",
+                label: isDemo ? "Moisture % (Demo — Backend check)" : "Avg Moisture %",
                 data: values,
                 borderColor: "#16a34a",
                 backgroundColor: "rgba(22, 163, 74, 0.1)",
@@ -115,24 +154,30 @@ function drawChart(labels, values, isDemo = false) {
         }
     });
 }
-
-
+ 
+//Download report
+ 
 document.querySelector(".download-report").addEventListener("click", function () {
     const moisture = document.getElementById("moisture").innerText;
     const temp = document.getElementById("temp").innerText;
+    // Report download me dynamic name handle karne ke liye local storage variable use kiya hai
+    const currentUserName = localStorage.getItem('agrobot_user') || "Guest_User";
+    const currentSensorId = localStorage.getItem('agrobot_sensor_id') || "Not_Logged_In";
+    
     const now = new Date();
     const dateTime = now.toISOString().slice(0, 10) + "_" + now.getHours() + now.getMinutes();
-    const report = `--- AgroBot Smart Report ---\nDate: ${now.toLocaleDateString()}\nTime: ${now.toLocaleTimeString()}\n------------------------------\nSensor ID: AGRO-102\nSoil Moisture: ${moisture}\nAvg Temperature: ${temp}`;
+    const report = `--- AgroBot Smart Report ---\nDate: ${now.toLocaleDateString()}\nTime: ${now.toLocaleTimeString()}\n------------------------------\nUser: ${currentUserName}\nSensor ID: ${currentSensorId}\nSoil Moisture: ${moisture}\nAvg Temperature: ${temp}`;
     const blob = new Blob([report], { type: "text/plain" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = `AgroBot_Report_${dateTime}.txt`;
     link.click();
 });
-
-
+ 
+// weather
+ 
 const apiKey = "e90f559b8ace2ad8085d7fb17acfcc67";
-
+ 
 function updateWeatherUI(data) {
     document.getElementById("temp").innerText = Math.round(data.main.temp) + "°C";
     document.getElementById("humidity").innerText = data.main.humidity + "%";
@@ -147,15 +192,42 @@ function updateWeatherUI(data) {
     else if (weatherMain.includes("clear")) icon.innerText = "☀️";
     else icon.innerText = "🌡️";
 }
-
+ 
 function handleLocationError() {
     document.querySelectorAll(".weather-card h1").forEach(el => el.innerText = "N/A");
     document.querySelectorAll(".weather-card p").forEach(el => el.innerText = "Location denied.");
     document.getElementById("temp-icon").innerText = "🚫";
 }
-
-
+ 
+ 
 window.onload = function () {
+    const savedUser = localStorage.getItem('agrobot_user');
+    const savedSensor = localStorage.getItem('agrobot_sensor_id');
+    const userEl = document.getElementById('display-user');
+    const sensorEl = document.getElementById('display-sensor');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    if (savedUser && savedSensor) {
+        userEl.innerText = savedUser;
+        sensorEl.innerText = "Sensor ID: " + savedSensor;
+        if(logoutBtn) {
+            logoutBtn.style.display = 'block';
+            logoutBtn.onclick = function() {
+                localStorage.removeItem('agrobot_user');
+                localStorage.removeItem('agrobot_sensor_id');
+                window.location.reload(); // State refresh karne ke liye
+            };
+        }
+    } else {
+        userEl.innerText = "Guest User";
+        sensorEl.innerText = "Sensor ID: Not Logged In";
+        if(logoutBtn) logoutBtn.style.display = 'none';
+    }
+
+
+    wakeUpBackend();
+    checkBackendStatus();
+ 
     const chartScript = document.createElement("script");
     chartScript.src = "https://cdn.jsdelivr.net/npm/chart.js";
     chartScript.onload = function () {
@@ -164,7 +236,9 @@ window.onload = function () {
         setInterval(fetchLatestMoisture, 30000);
     };
     document.head.appendChild(chartScript);
-
+ 
+    setInterval(checkBackendStatus, 30000);
+ 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(pos => {
             fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&appid=${apiKey}&units=metric`)
