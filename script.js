@@ -176,7 +176,7 @@ document.querySelector(".download-report").addEventListener("click", function ()
  
 // weather
  
-const apiKey = "e90f559b8ace2ad8085d7fb17acfcc67";
+// const apiKey;
  
 function updateWeatherUI(data) {
     document.getElementById("temp").innerText = Math.round(data.main.temp) + "°C";
